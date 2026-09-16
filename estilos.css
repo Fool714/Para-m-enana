@@ -1,28 +1,373 @@
-*{
-    margin: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.contenedor{
-    background: blueviolet;
-    width: 100vw;
-    height: 100vh;
-    text-align: center;
+:root {
+  --gold: #ffd24d;
+  --gold-soft: #fff3b8;
+  --night: #05060a;
+  --rose: #d84f72;
 }
 
-p{
-    font-size: xx-large;
-    padding: 15%;
+html, body {
+  height: 100%;
 }
 
-button{
-    font-size: xx-large;
-    padding: 0.75em;
+body {
+  overflow: hidden;
+  color: white;
+  background: var(--night);
+  font-family: "Poppins", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#yesBtn{
-    transform: translate(-100%,0);
+#space {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
 }
 
-#noBtn{
-    position: absolute;
+/* ---------- Girasoles con recuerdo ---------- */
+
+.recuerdos {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.recuerdo {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 14px rgba(255, 190, 40, .55));
+  animation: flotar 5s ease-in-out infinite;
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.recuerdo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.recuerdo:hover,
+.recuerdo:focus-visible {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 26px rgba(255, 210, 70, .95));
+  outline: none;
+}
+
+.recuerdo .badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(145deg, #ff6b8e, #d8365d);
+  box-shadow: 0 0 12px rgba(255, 90, 130, .8);
+  animation: latir 1.6s ease-in-out infinite;
+}
+
+.r1 { left: 8%;  top: 30%;  animation-delay: -.6s; }
+.r2 { right: 9%; top: 36%;  animation-delay: -2.1s; }
+.r3 { left: 15%; bottom: 20%; animation-delay: -3.4s; width: 62px; height: 62px; }
+.r4 { right: 14%; bottom: 24%; animation-delay: -1.4s; width: 62px; height: 62px; }
+
+/* ---------- Capa de texto ---------- */
+
+.scene {
+  position: relative;
+  z-index: 2;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 20px 30px;
+  pointer-events: none;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.intro {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(30px, 5vw, 48px);
+  color: var(--gold-soft);
+  text-shadow: 0 0 18px rgba(255, 200, 60, .55);
+  animation: fadeDown 2s ease both;
+}
+
+.open-letter {
+  pointer-events: auto;
+  border: 1px solid rgba(255, 220, 120, .55);
+  border-radius: 999px;
+  padding: 11px 26px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #3b2a05;
+  background: linear-gradient(145deg, #ffe17a, #ffbe1f);
+  box-shadow: 0 0 28px rgba(255, 190, 40, .45);
+  cursor: pointer;
+  animation: fadeUp 2.4s ease both, brillo 2.6s ease-in-out infinite 2.4s;
+}
+
+.open-letter:hover {
+  filter: brightness(1.07);
+}
+
+.hint {
+  margin-top: 12px;
+  max-width: 24ch;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 245, 210, .55);
+  animation: fadeUp 3s ease both;
+}
+
+/* ---------- Ventanas ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(4, 3, 8, .74);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: .4s ease;
+}
+
+.modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.close {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 30px;
+  line-height: 1;
+  color: #a98a4a;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Galería */
+
+.photo-card {
+  position: relative;
+  width: min(430px, 92vw);
+  padding: 12px 12px 10px;
+  border-radius: 16px;
+  border: 8px solid transparent;
+  background:
+    linear-gradient(#fffdf4, #fff6dd) padding-box,
+    linear-gradient(140deg, #ffd24d, #f0a500 45%, #ffe79a) border-box;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, .6);
+  transform: scale(.94);
+  transition: .4s ease;
+  text-align: center;
+}
+
+.modal.open .photo-card {
+  transform: scale(1);
+}
+
+.photo-card .close {
+  color: #8a6a2a;
+}
+
+.photo-card img {
+  width: 100%;
+  max-height: 62dvh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #1a1508;
+  display: block;
+}
+
+.photo-caption {
+  margin: 10px 4px 6px;
+  font-family: "Great Vibes", cursive;
+  font-size: 25px;
+  line-height: 1.2;
+  color: #b4436a;
+}
+
+.photo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #8a7355;
+  font-size: 12px;
+}
+
+.photo-nav button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  color: #3b2a05;
+  background: linear-gradient(145deg, #ffe17a, #f0a500);
+  cursor: pointer;
+}
+
+/* Carta */
+
+.letter {
+  width: min(500px, 92vw);
+  max-height: 90dvh;
+  overflow: auto;
+  position: relative;
+  padding: 30px 26px 26px;
+  border-radius: 18px;
+  border: 10px solid transparent;
+  background:
+    linear-gradient(#fffdf4, #fff6dd) padding-box,
+    linear-gradient(140deg, #ffd24d, #f0a500 45%, #ffe79a) border-box;
+  color: #3a2d1c;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .6);
+  transform: translateY(26px) scale(.94);
+  transition: .4s ease;
+  text-align: center;
+}
+
+.modal.open .letter {
+  transform: translateY(0) scale(1);
+}
+
+.photo-frame {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  padding: 5px;
+  background: linear-gradient(135deg, #ffd84d, #f0a500);
+  box-shadow: 0 10px 28px rgba(154, 104, 40, .28);
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.small-title {
+  color: #b08020;
+  letter-spacing: 2px;
+  font-size: 11px;
+}
+
+h1 {
+  font-family: "Great Vibes", cursive;
+  color: var(--rose);
+  font-size: 46px;
+  font-weight: 400;
+  margin: 2px 0 14px;
+}
+
+.letter p:not(.small-title):not(.final-line):not(.signature) {
+  font-family: Georgia, serif;
+  font-size: 16.5px;
+  line-height: 1.8;
+  margin: 12px auto;
+  max-width: 42ch;
+}
+
+.final-line {
+  margin-top: 18px;
+  font-family: "Great Vibes", cursive;
+  color: #c94b6d;
+  font-size: 30px;
+}
+
+.signature {
+  margin-top: 4px;
+  color: #8a7355;
+  font-size: 13px;
+}
+
+.music-button {
+  margin-top: 18px;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  background: linear-gradient(145deg, #ffe17a, #f0a500);
+  color: #3b2a05;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(216, 160, 40, .3);
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@keyframes latir {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.18); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes brillo {
+  50% { box-shadow: 0 0 44px rgba(255, 200, 60, .75); }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 40px; }
+  .letter p:not(.small-title):not(.final-line):not(.signature) { font-size: 15px; }
+  .photo-frame { width: 120px; height: 120px; }
+  .recuerdo { width: 58px; height: 58px; }
+  .r3, .r4 { width: 50px; height: 50px; }
+  .r1 { left: 4%; top: 26%; }
+  .r2 { right: 4%; top: 32%; }
+  .r3 { left: 8%; bottom: 22%; }
+  .r4 { right: 8%; bottom: 26%; }
+  .photo-caption { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
