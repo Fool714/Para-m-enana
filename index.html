@@ -1,17 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lunita</title>
-    <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Lunita 🌻</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="contenedor">
-    <p>¿Quieres ser mi San Valentin?</p>
-    <button id="yesBtn">Si</button>
-    <button id="noBtn">No</button>
-</div>
-<script src="index.js"></script>    
+  <!-- Estrellas, vórtice, corazón de chispas y girasoles voladores -->
+  <canvas id="space"></canvas>
+
+  <!-- Girasoles que guardan un recuerdo. Para cambiar una foto solo
+       edita data-foto y data-texto. -->
+  <div class="recuerdos" id="recuerdos">
+    <button class="recuerdo r1" data-foto="img/foto-beso.jpeg" data-texto="Nuestro lugar favorito: aquí, así">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#girasol"></use></svg>
+      <span class="badge">♥</span>
+    </button>
+    <button class="recuerdo r2" data-foto="img/foto-noche.jpeg" data-texto="Esa noche por la calle, sin prisa">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#girasol"></use></svg>
+      <span class="badge">♥</span>
+    </button>
+    <button class="recuerdo r3" data-foto="img/foto-helado.jpeg" data-texto="Helado a media tarde contigo">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#girasol"></use></svg>
+      <span class="badge">♥</span>
+    </button>
+    <button class="recuerdo r4" data-foto="img/foto-gomitas.jpeg" data-texto="Dos ositos, como nosotros">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#girasol"></use></svg>
+      <span class="badge">♥</span>
+    </button>
+  </div>
+
+  <main class="scene">
+    <p class="intro">Para mi Lunita</p>
+    <div class="spacer"></div>
+    <button class="open-letter" id="openLetter">Para ti 🌻</button>
+    <p class="hint">Toca el corazón, o los girasoles para ver nuestros recuerdos</p>
+  </main>
+
+  <!-- Galería de recuerdos -->
+  <div class="modal foto-modal" id="photoModal">
+    <div class="photo-card">
+      <button class="close" id="closePhoto" aria-label="Cerrar">×</button>
+      <img id="photoImg" src="img/foto-gomitas.jpeg" alt="Un recuerdo nuestro">
+      <p class="photo-caption" id="photoCaption"></p>
+      <div class="photo-nav">
+        <button id="prevPhoto" aria-label="Anterior">‹</button>
+        <span id="photoCount"></span>
+        <button id="nextPhoto" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- La carta -->
+  <div class="modal" id="letterModal">
+    <div class="letter">
+      <button class="close" id="closeLetter" aria-label="Cerrar">×</button>
+
+      <div class="photo-frame">
+        <img src="/img/foto-beso.jpeg" alt="Un recuerdo juntos">
+      </div>
+
+      <p class="small-title">Para mi Lunita</p>
+      <h1>Mi Solecito</h1>
+
+      <p>
+        Yo nunca supe que te amaba. Lo sentí en el ritmo acelerado de mis
+        latidos, en el cosquilleo de mis entrañas, al ver cómo a tu lado
+        los días lentos y monótonos se volvían recuerdos de risas y palabras tuyas.
+      </p>
+
+      <p>
+        Tú eres ese amor que llegó para quedarse en mi alma y darle calidez
+        a mi corazón.
+      </p>
+
+      <p class="final-line">Te amo, Lunita 🌻</p>
+      <p class="signature">Tu Solecito</p>
+
+      <button class="music-button" id="musicButton">♫ Disco Eterno</button>
+    </div>
+  </div>
+
+  <audio id="music" loop preload="auto">
+    <source src="sounds/disco-eterno.mp4" type="audio/mp4">
+  </audio>
+
+  <!-- Girasol vectorial reutilizable -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <radialGradient id="petalo" cx="30%" cy="30%">
+        <stop offset="0%" stop-color="#fff2a8"></stop>
+        <stop offset="60%" stop-color="#ffc93c"></stop>
+        <stop offset="100%" stop-color="#e8960b"></stop>
+      </radialGradient>
+      <radialGradient id="centro" cx="35%" cy="35%">
+        <stop offset="0%" stop-color="#8a5a1e"></stop>
+        <stop offset="100%" stop-color="#3d2408"></stop>
+      </radialGradient>
+      <g id="girasol">
+        <path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(15 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(45 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(75 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(105 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(135 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(165 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(195 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(225 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(255 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(285 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(315 50 50)"/><path d="M50 42 Q55.5 24 50 14 Q44.5 24 50 42 Z" fill="#c07d0a" transform="rotate(345 50 50)"/>
+        <path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(0.0 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(27.7 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(55.4 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(83.1 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(110.8 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(138.5 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(166.2 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(193.8 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(221.5 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(249.2 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(276.9 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(304.6 50 50)"/><path d="M50 42 Q56.5 20 50 4 Q43.5 20 50 42 Z" fill="url(#petalo)" transform="rotate(332.3 50 50)"/>
+        <circle cx="50" cy="50" r="16" fill="url(#centro)"></circle>
+        <circle cx="50.0" cy="50.0" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="48.5" cy="51.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="50.2" cy="47.2" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="52.1" cy="52.7" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="46.1" cy="49.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="53.8" cy="47.6" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="48.7" cy="54.7" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="47.6" cy="45.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="55.3" cy="51.9" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="44.5" cy="52.3" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="52.7" cy="44.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="52.0" cy="56.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="44.0" cy="46.5" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="57.0" cy="48.5" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="45.7" cy="56.1" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="49.0" cy="42.4" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="56.1" cy="55.1" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="41.8" cy="50.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="56.0" cy="44.0" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="49.6" cy="58.7" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="44.3" cy="43.2" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="59.0" cy="51.2" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="42.3" cy="55.3" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="52.1" cy="40.7" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="54.8" cy="58.5" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="40.5" cy="47.0" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="59.2" cy="45.7" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="46.0" cy="59.5" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="46.4" cy="40.1" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="59.5" cy="55.0" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="39.5" cy="52.8" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="56.0" cy="40.7" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="51.9" cy="61.1" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="41.0" cy="43.0" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="61.6" cy="49.0" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="42.0" cy="58.6" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="50.1" cy="38.1" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="58.1" cy="59.0" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="37.8" cy="48.9" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="59.9" cy="42.5" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="47.7" cy="62.4" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="43.2" cy="39.2" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="62.4" cy="53.4" r="1.2" fill="rgba(255,215,130,.30)"/><circle cx="38.4" cy="56.0" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="54.6" cy="37.6" r="1.2" fill="rgba(25,13,0,.5)"/><circle cx="55.0" cy="62.4" r="1.2" fill="rgba(255,215,130,.30)"/>
+        <circle cx="50" cy="50" r="16" fill="none" stroke="rgba(255,220,120,.35)" stroke-width="1.5"></circle>
+      </g>
+    </defs>
+  </svg>
+
+  <script src="script.js"></script>
 </body>
 </html>
